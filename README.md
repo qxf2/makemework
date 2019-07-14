@@ -11,9 +11,9 @@ Fix the issues in this repo and make this program work.
 # Your assignment
 Complete the weather shopper exercise using the code provided to you. Your assignment is to:
 
-a. fix the errors in the existing code 
-b. complete the payment structure using a code structure similar to what has been used for the other actions
-c. use the same design patterns and programming style used in this repository
+1. fix the errors in the existing code 
+2. complete the payment structure using a code structure similar to what has been used for the other actions
+3. use the same design patterns and programming style used in this repository
 
 # How to proceed?
 1. Run the test using the command `pytest -k e2e`
