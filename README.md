@@ -10,6 +10,7 @@ Fix the issues in this repo and make this program work.
 
 # Your assignment
 Complete the weather shopper exercise using the code provided to you. Your assignment is to:
+
 a. fix the errors in the existing code 
 b. complete the payment structure using a code structure similar to what has been used for the other actions
 c. use the same design patterns and programming style used in this repository
@@ -30,13 +31,14 @@ Remember, you should not stop at just fixing the existing code. You should also 
 
 # Debugging tips
 Here are some useful debugging tips that do not involve the use of debugger:
-    > Search for strings in all files 
-    > Search for sub-strings in all files if the exact string does not exist
-    > F12 to follow the definition of a method
-    > Add debug messages to figure out the flow 
-    > if True: trick (to get exact error messages, in the test, replace `try:` with `if True:` and comment out the `except` portion)
-    > Read the log messages backwards 
-    > Sometimes the error happens in the line before the failure!
+
+1. Search for strings in all files 
+2. Search for sub-strings in all files if the exact string does not exist
+3. F12 to follow the definition of a method
+4. Add debug messages to figure out the flow 
+5. if True: trick (to get exact error messages, in the test, replace `try:` with `if True:` and comment out the `except` portion)
+6. Read the log messages backwards 
+7. Sometimes the error happens in the line before the failure!
 
 
 # Notes:
