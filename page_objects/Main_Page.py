@@ -23,6 +23,7 @@ class Main_Page(Base_Page):
         "Return the temperature listed on the landing page"
         result_flag = False 
         temperature = self.get_text(self.TEMPERATURE_FIELD)
+        temperature = temperature.decode("utf-8")
         if temperature is not None:
             self.write("The temperature parsed is: %s"%temperature,level="debug")
             #Strip away the degree centigrade
