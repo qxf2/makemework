@@ -36,11 +36,11 @@ class Cart_Page(Base_Page):
         cart_items = []
         row_elements = self.get_elements(self.CART_ROW)
         for index,row in enumerate(row_elements):
-            column_elements = self.get_elements(self.CART_ROW_COLUMN%(index))
+            column_elements = self.get_elements(self.CART_ROW_COLUMN%(index+1))
             item = []
             for col in column_elements:
                 text = self.get_dom_text(col)
-            item.append(text.decode('ascii'))
+                item.append(text.decode('ascii'))
             item = self.process_item(item)
             cart_items.append(item)
 
