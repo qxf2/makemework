@@ -58,7 +58,7 @@ class Cart_Page(Base_Page):
     
     def verify_extra_items(self,expected_cart,actual_cart):
         "Items which exist in actual but not in expected"
-        item_match_flag = False 
+        item_match_flag = True 
         for item in actual_cart:
             #Does the item exist in the product list
             found_flag = False 
