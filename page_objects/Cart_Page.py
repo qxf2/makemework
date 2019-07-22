@@ -5,7 +5,8 @@ URL: /cart
 
 from .Base_Page import Base_Page
 from utils.Wrapit import Wrapit
-import conf.locators_conf as locators 
+import conf.locators_conf as locators
+import conf.payment_details_conf as paymentdetails
 
 class Cart_Page(Base_Page):
     "This class models the cart page"
@@ -14,7 +15,21 @@ class Cart_Page(Base_Page):
     CART_ROW_COLUMN = locators.CART_ROW_COLUMN
     CART_TOTAL = locators.CART_TOTAL
     COL_NAME = 0
-    COL_PRICE = 1 
+    COL_PRICE = 1
+    PAY_WITH_CARD = locators.PAY_WITH_CARD
+    EMAIL = locators.EMAIL
+    CARD_NUMBER = locators.CARD_NUMBER
+    CARD_EXPIRY = locators.CARD_EXPIRY
+    CVC = locators.CVC
+    ZIP_CODE = locators.ZIP_CODE
+    PHONE_NUMBER = locators.PHONE_NUMBER
+    REMEMBER_ME = locators.REMEMBER_ME
+    PAY_BUTTON = locators.PAY_BUTTON
+    PAYMENT_MESSAGE = locators.PAYMENT_MESSAGE
+    MANUAL_ENTRY_BUTTON = locators.MANUAL_ENTRY_BUTTON
+    VERIFICATION_MESSAGE = locators.VERIFICATION_MESSAGE
+
+
 
     def start(self):
         "Override the start method of base"
@@ -144,3 +159,56 @@ class Cart_Page(Base_Page):
         result_flag &= self.verify_cart_total(expected_cart)
 
         return result_flag 
+    
+    def click_pay_button(self):
+        "Click the 'Pay with Card' button"
+        self.click_element(self.PAY_WITH_CARD)
+
+        
+    
+    
+
+
+    def make_payment(self,email,card_number,card_expiry,card_cvc,zip_code,phone_number):
+        "Fill the payment details"
+        self.switch_frame(name='stripe_checkout_app')
+    
+        self.wait(2)
+        self.set_text(self.EMAIL,email)
+        self.wait(4)
+    
+        try:
+            message = self.get_text(self.VERIFICATION_MESSAGE)
+            self.wait(3)
+            if 'Enter the verification code' in message.decode('utf-8'):
+                self.click_element(self.MANUAL_ENTRY_BUTTON)
+                self.wait(3)
+        except:
+            print("Enter details manually")
+        
+        finally:
+            self.set_text(self.CARD_NUMBER,card_number)
+            self.set_text(self.CARD_EXPIRY,card_expiry)
+            self.set_text(self.CVC,card_cvc)
+            self.set_text(self.ZIP_CODE,zip_code)
+            self.select_checkbox(self.REMEMBER_ME)
+            self.set_text(self.PHONE_NUMBER,phone_number)
+            self.click_element(self.PAY_BUTTON)
+
+
+        self.switch_frame_to_window()
+        self.wait(4)
+       
+    def check_payment_status(self):
+        "Check the payment status"      
+        message = self.get_text(self.PAYMENT_MESSAGE)
+        
+        if(message.decode('utf-8') == 'PAYMENT SUCCESS'):
+            return True
+        elif(message.decode('utf-8') == 'PAYMENT FAILED'):
+            return False
+        
+
+
+        
+
