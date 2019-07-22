@@ -14,6 +14,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from page_objects.PageFactory import PageFactory
 from utils.Option_Parser import Option_Parser
 import conf.e2e_weather_shopper_conf as conf
+import conf.payment_details_conf as paymentdetails
 
 def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name,remote_flag,testrail_flag,tesults_flag,test_run_id,remote_project_name,remote_build_name):
 
@@ -73,9 +74,34 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         #Verify the products displayed on the cart page
         result_flag = test_obj.verify_cart(product_list)
         test_obj.log_result(result_flag,
-        positive="The cart looks good, proceed to pay",
+        positive="The cart looks good",
         negative="Something wrong with the cart. The log messages above will have the details",
         level="critical")
+
+        #Click the Pay with Card button
+        
+
+        test_obj.click_pay_button()
+
+        #Get the test details from paymentdetails file
+        email = paymentdetails.email
+        card_number = paymentdetails.card_number
+        card_expiry = paymentdetails.card_expiry
+        card_cvc = paymentdetails.card_cvc
+        zip_code = paymentdetails.zip_code
+        phone_number = paymentdetails.phone_number
+        
+        #Fill the details in the payment form
+        test_obj.make_payment(email,card_number,card_expiry,card_cvc,zip_code,phone_number)
+        
+        #Check the payment status
+        #test_obj.check_payment_status()
+        result_flag = test_obj.check_payment_status()
+        test_obj.log_result(result_flag,
+        positive="The Payment was successful",
+        negative="The Payment was not successful",
+        level="critical")
+        
 
         #Print out the results
         test_obj.write_test_summary()
