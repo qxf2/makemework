@@ -16,11 +16,11 @@ The code you are going to run is a Selenium test for the [Weather Shopper](http:
 The setup instructions are intentionally high-level since this repository is aimed at people with people who have already written Python before. If you are beginner, you will find our [other repository](https://github.com/qxf2/wtfiswronghere) a better place to start. 
 
 # Your assignment
-Complete the [weather shopper exercise](https://github.com/qxf2/weather-shopper) using the code provided to you. Your assignment is to:
+The [weather shopper exercise](https://github.com/qxf2/weather-shopper) has been partially completed using the code provided to you. Your assignment is to:
 
 1. fix the errors in the existing code 
-2. complete the payment structure using a code structure similar to what has been used for the other actions
-3. use the same design patterns and programming style used in this repository
+2. complete the exercise on the payment page 
+3. use the same design patterns and programming style when solving the exercises
 
 # How to proceed?
 1. Run the test using the command `pytest -k e2e`
@@ -34,7 +34,7 @@ If you fix all the bugs in this code, your test should perform like the gif belo
 
 ![](working-weather-shopper-test.gif)
 
-Remember, you should not stop at just fixing the existing code. You should also complete the instructions on the cart page.
+Remember, you should not stop at just fixing the existing code. You should also complete the instructions on the cart page too!
 
 # Debugging tips
 Here are some useful debugging tips that do not involve the use of debugger:
