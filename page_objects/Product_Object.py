@@ -87,7 +87,7 @@ class Product_Object():
         all_products = self.get_all_products_on_page()
         for product in all_products:
             if filter_condition.lower() in product.name.lower():
-                if product.price >= min_price:
+                if product.price <= min_price:
                     minimum_priced_product = product
                     min_price = product.price
                     min_name = product.name 
