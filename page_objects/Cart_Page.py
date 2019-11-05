@@ -40,7 +40,7 @@ class Cart_Page(Base_Page):
             item = []
             for col in column_elements:
                 text = self.get_dom_text(col)
-            item.append(text.decode('ascii'))
+                item.append(text.decode('ascii'))
             item = self.process_item(item)
             cart_items.append(item)
 
@@ -58,7 +58,7 @@ class Cart_Page(Base_Page):
     
     def verify_extra_items(self,expected_cart,actual_cart):
         "Items which exist in actual but not in expected"
-        item_match_flag = False 
+        item_match_flag = True #False to True
         for item in actual_cart:
             #Does the item exist in the product list
             found_flag = False 
@@ -125,7 +125,7 @@ class Cart_Page(Base_Page):
         "Verify the total in the cart"
         expected_total = 0
         for product in expected_cart:
-            expected_total = product.price 
+            expected_total += product.price #+ operation
         actual_total = self.get_total_price()
         result_flag = actual_total == expected_total
         self.conditional_write(result_flag,
