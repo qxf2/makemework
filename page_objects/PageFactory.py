@@ -11,7 +11,7 @@ Example code:
 Pages implemented so far:
 1. 
 """
-
+from .zero_page import Zero_Page
 from conf import base_url_conf as conf
 
 
@@ -24,6 +24,8 @@ class PageFactory():
 
         #Add your code for initializing each page over here
         #See example in the opening doc string of this file
+        if page_name in ["zero","zero page"]:
+            test_obj = Zero_Page(base_url=base_url,trailing_slash_flag=trailing_slash_flag)
 
         return test_obj
 

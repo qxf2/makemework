@@ -1,9 +1,31 @@
 import os,pytest
-from conf import browser_os_name_conf
-from utils import post_test_reports_to_slack
-from utils.email_pytest_report import Email_Pytest_Report
-from utils import Tesults
-from conf import base_url_conf as conf
+from .conf import browser_os_name_conf
+from .utils import post_test_reports_to_slack
+from .utils.email_pytest_report import Email_Pytest_Report
+from .utils import Tesults
+from .conf import base_url_conf as conf
+from .page_objects.PageFactory import PageFactory
+
+@pytest.fixture
+def test_obj(base_url,browser,browser_version,os_version,os_name,remote_flag,testrail_flag,tesults_flag,test_run_id,remote_project_name,remote_build_name):
+    "Return a test object"
+    test_obj = PageFactory.get_page_object("Zero Page",base_url=base_url)
+    test_obj.register_driver(remote_flag,os_name,os_version,browser,browser_version,remote_project_name,remote_build_name)
+        
+    #3. Setup TestRail reporting
+    if testrail_flag.lower()=='y':
+        if test_run_id is None:
+            test_obj.write('\033[91m'+"\n\nTestRail Integration Exception: It looks like you are trying to use TestRail Integration without providing test run id. \nPlease provide a valid test run id along with test run command using -R flag and try again. for eg: pytest -X Y -R 100\n"+'\033[0m')
+            testrail_flag = 'N'   
+        if test_run_id is not None:
+            test_obj.register_testrail()
+            test_obj.set_test_run_id()
+
+    if tesults_flag.lower()=='y':
+        test_obj.register_tesults()
+
+    return test_obj
+
 
 @pytest.fixture
 def browser(request):

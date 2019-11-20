@@ -54,6 +54,7 @@ class Base_Page(Borg,unittest.TestCase):
             self.current_console_log_errors = []
             self.window_structure = {}
             self.testrail_flag = False
+            self.test_run_id = None
             self.tesults_flag = False
             self.images = []
             self.browserstack_flag = False
@@ -117,6 +118,11 @@ class Base_Page(Borg,unittest.TestCase):
         "Register TestRail with Page"
         self.testrail_flag = True
         self.tr_obj = Test_Rail()
+
+
+    def set_test_run_id(self,test_run_id):
+        "Set the test run id"
+        self.test_run_id = test_run_id
 
 
     def register_tesults(self):
