@@ -7,21 +7,19 @@ import os,sys,time
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from page_objects.PageFactory import PageFactory
 from utils.Option_Parser import Option_Parser
-#import conf.example_form_conf as conf
-import conf.testrail_caseid_conf as testrail_file
 
-def test_example_form(test_obj):
+def test_e2e(test_obj):
     "Run the test"
-    try:
+    #try:
+    if True:
         #Initalize flags for tests summary
         expected_pass = 0
         actual_pass = -1
         start_time = int(time.time())	#Set start_time with current time
 
         #1. Create a test object and fill the example form.
-        #test_obj = PageFactory.get_page_object("Main Page")
+        test_obj = PageFactory.get_page_object("Landing Page")
                 
-        
         #13. Print out the results
         test_obj.write_test_summary()
 
@@ -30,10 +28,11 @@ def test_example_form(test_obj):
         expected_pass = test_obj.result_counter
         actual_pass = test_obj.pass_counter
         test_obj.reset()
-        
+    """
     except Exception as e:
         print("Exception when trying to run test:%s"%__file__)
         print("Python says:%s"%str(e))
+    """
 
     assert expected_pass == actual_pass, "Test failed: %s"%__file__
        
@@ -63,7 +62,7 @@ if __name__=='__main__':
 
         if options.tesults_flag.lower()=='y':
             test_obj.register_tesults()
-        test_example_form(test_obj) 
+        test_e2e(test_obj) 
     else:
         print('ERROR: Received incorrect comand line input arguments')
         print(option_obj.print_usage())
