@@ -4,7 +4,7 @@ URL: /
 """
 from .Base_Page import Base_Page
 from utils.Wrapit import Wrapit
-import conf.locators_conf as locators 
+import conf.locators_conf as locators
 
 class Main_Page(Base_Page):
     "Page Object for the main page"
@@ -21,13 +21,13 @@ class Main_Page(Base_Page):
     @Wrapit._screenshot
     def get_temperature(self):
         "Return the temperature listed on the landing page"
-        result_flag = False 
+        result_flag = False
         temperature = self.get_text(self.TEMPERATURE_FIELD)
+
         if temperature is not None:
             self.write("The temperature parsed is: %s"%temperature,level="debug")
             #Strip away the degree centigrade
-            temperature = temperature.split()[1] 
-            
+            temperature = temperature.split()[0]
             try:
                 temperature = int(temperature)
             except Exception as e:
@@ -41,14 +41,14 @@ class Main_Page(Base_Page):
         self.conditional_write(result_flag,
         positive="Obtained the temperature: %d"%temperature,
         negative="Could not obtain the temperature on the landing page.")
-        
+
         return temperature
 
     @Wrapit._exceptionHandler
     @Wrapit._screenshot
     def click_buy_button(self,product_type):
         "Choose to buy moisturizer or sunscreen"
-        result_flag = False 
+        result_flag = False
         product_type = product_type.lower()
         if product_type in ['sunscreens','moisturizers']:
             result_flag = self.click_element(self.BUY_BUTTON%product_type)
