@@ -51,13 +51,12 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         level="critical")
         #Add products
         product_filter_list = conf.PURCHASE_LOGIC[product_type]
-        print("000000000000000000")
         product_list = []
-        print("111111111111111111")
+
         for filter_condition in product_filter_list:
             cheapest_product = test_obj.get_minimum_priced_product(filter_condition)
-            print("2222222222222222222222")
             product_list.append(cheapest_product)
+            print(product_list)
             result_flag = test_obj.add_product(cheapest_product.name)
             test_obj.log_result(result_flag,
             positive="Added the cheapest product '%s' with '%s'"%(cheapest_product.name,filter_condition),
