@@ -22,14 +22,14 @@ class Main_Page(Base_Page):
     def get_temperature(self):
         "Return the temperature listed on the landing page"
         result_flag = False
-        temperature = self.get_text(self.TEMPERATURE_FIELD)
+        temperature = self.get_text(self.TEMPERATURE_FIELD).decode('utf-8')
 
         if temperature is not None:
             self.write("The temperature parsed is: %s"%temperature,level="debug")
             #Strip away the degree centigrade
-            temperature = temperature.split()[0]
+            temperature = temperature.split(' ')
             try:
-                temperature = int(temperature)
+                temperature = int(temperature[0])
             except Exception as e:
                 self.write("Error type casting temperature to int",level="error")
                 self.write("Obtained the temperature %s"%temperature)
