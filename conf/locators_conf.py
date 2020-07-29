@@ -21,7 +21,7 @@ PAGE_HEADING = "xpath,//h2[text()='%s']"
 PRODUCTS_LIST = "xpath,//div[contains(@class,'col-4')]"
 ADD_PRODUCT_BUTTON = "xpath,//div[contains(@class,'col-4') and contains(.,'%s')]/descendant::button[text()='Add']"
 CART_QUANTITY_TEXT = "id,cart"
-CART_BUTTON = "xpath,//button[@onclick='goTocart()']"
+CART_BUTTON = "xpath,//button[@onclick='goToCart()']"
 
 #Cart page
 CART_TITLE = "xpath,//h2[text()='Checkout']"
