@@ -41,7 +41,6 @@ class Main_Page(Base_Page):
         self.conditional_write(result_flag,
         positive="Obtained the temperature: %d"%temperature,
         negative="Could not obtain the temperature on the landing page.")
-
         return temperature
 
     @Wrapit._exceptionHandler
