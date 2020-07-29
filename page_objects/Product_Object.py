@@ -127,10 +127,7 @@ class Product_Object():
         before_cart_quantity = self.get_current_cart_quantity()
         result_flag = self.click_add_product_button(product_name)
         after_cart_quantity = self.get_current_cart_quantity()
-        print("before_cart_quantity:",before_cart_quantity)
-        print("after_cart_quantity",after_cart_quantity)
         result_flag &= True if after_cart_quantity - before_cart_quantity == 1 else False
-        print("All good in add_product")
         return result_flag
 
     @Wrapit._screenshot
