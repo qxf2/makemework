@@ -81,7 +81,6 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         expected_pass = test_obj.result_counter
         actual_pass = test_obj.pass_counter
         test_obj.teardown()
-        print("hii")
     """
     except Exception as e:
         print("Exception when trying to run test:%s"%__file__)
