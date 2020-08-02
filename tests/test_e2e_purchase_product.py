@@ -72,6 +72,13 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         negative="Something wrong with the cart. The log messages above will have the details",
         level="critical")
 
+        #Go to the Pay with card
+        result_flag = test_obj.go_to_pay()
+        test_obj.log_result(result_flag,
+        positive="Automation is now on the payment form",
+        negative="Automation is not on the payment form",
+        level="critical")
+
         #Print out the results
         test_obj.write_test_summary()
 

@@ -23,6 +23,7 @@ class Product_Object():
     CART_QUANTITY = 0
     PRODUCTS_PER_PAGE = 6
 
+
     def convert_str_to_int(self,string, default=100000, expect_fail=False):
         "Convert a given string to integer. Return default if you cannot convert"
         try:

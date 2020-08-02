@@ -15,6 +15,7 @@ class Cart_Page(Base_Page):
     CART_TOTAL = locators.CART_TOTAL
     COL_NAME = 0
     COL_PRICE = 1
+    CART_PAY_BUTTON = locators.CART_PAY_BUTTON
 
     def start(self):
         "Override the start method of base"
@@ -142,5 +143,21 @@ class Cart_Page(Base_Page):
         if result_flag is False:
             result_flag &= self.verify_missing_item(expected_cart,actual_cart)
         result_flag &= self.verify_cart_total(expected_cart)
+
+        return result_flag
+
+    @Wrapit._screenshot
+    def click_pay_button(self):
+        "Click to the pay button"
+        result_flag = self.click_element(self.CART_PAY_BUTTON)
+        self.conditional_write(result_flag,
+        positive="Clicked on the Pay with card button",
+        negative="Could not click on the Pay with card button")
+
+        return result_flag
+
+    def go_to_pay(self):
+        "Go to the Payment form"
+        result_flag = self.click_pay_button()
 
         return result_flag
