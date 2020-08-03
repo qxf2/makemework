@@ -79,6 +79,15 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         negative="Automation is not on the payment form",
         level="critical")
 
+        print("11111")
+        result_flag = test_obj.set_email("rohit@gmail.com")
+        print("22222")
+        test_obj.log_result(result_flag,
+        positive="Email successfully filled",
+        negative="Email successfully not filled",
+        level="critical")
+        print("33333")
+
         #Print out the results
         test_obj.write_test_summary()
 

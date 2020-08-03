@@ -17,6 +17,7 @@ class Cart_Page(Base_Page):
     COL_PRICE = 1
     CART_PAY_BUTTON = locators.CART_PAY_BUTTON
 
+
     def start(self):
         "Override the start method of base"
         url = "cart"
