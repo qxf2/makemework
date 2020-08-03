@@ -11,7 +11,7 @@ class Contact_Form_Object:
     "Page object for the contact Form"
 
     #locators
-    contact_name_field = locators.contact_name_field
+    #contact_name_field = locators.contact_name_field
     FORM_EMAIL_ID = locators.FORM_EMAIL_ID
     FORM_ACCOUNT_NUMBER = locators.FORM_ACCOUNT_NUMBER
     FORM_EXPIRY_DATE =  locators.FORM_EXPIRY_DATE

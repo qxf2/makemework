@@ -79,6 +79,8 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         negative="Automation is not on the payment form",
         level="critical")
 
+        test_obj = PageFactory.get_page_object("contact",base_url=base_url)
+
         print("11111")
         result_flag = test_obj.set_email("rohit@gmail.com")
         print("22222")
