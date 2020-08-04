@@ -109,7 +109,7 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         negative="Zip code successfully not filled",
         level="critical")
 
-        result_flag = test_obj.click_pay_button()
+        result_flag = test_obj.click_submit_button()
         test_obj.log_result(result_flag,
         positive="Pay button successfully clicked",
         negative="Pay button successfully not clicked",
@@ -158,5 +158,5 @@ if __name__=='__main__':
                         remote_project_name=options.remote_project_name,
                         remote_build_name=options.remote_build_name)
     else:
-        print('ERROR: Received incorrect comand line input arguments')
+        print('ERROR: Received incorrect command line input arguments')
         print(option_obj.print_usage())

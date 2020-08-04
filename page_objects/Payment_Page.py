@@ -93,14 +93,12 @@ class Payment_Page(Base_Page):
 
         return result_flag
 
-    @Wrapit._screenshot
-    def click_pay_button(self):
+    @Wrapit._exceptionHandler
+    def click_submit_button(self):
         "Click the pay button"
         result_flag = self.click_element(self.FORM_SUBMIT)
-        if result_flag:
-            self.switch_page("checkout")
         self.conditional_write(result_flag,
-        positive="Clicked on the pay button",
-        negative="Could not click on the pay button")
+        positive="Clicked on the submit button",
+        negative="Could not click on the submit button")
 
         return result_flag
