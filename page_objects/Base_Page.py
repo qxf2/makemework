@@ -294,6 +294,10 @@ class Base_Page(Borg,unittest.TestCase):
 
         return result_flag
 
+    def switch_frame(self,name=None):
+        "Make the driver switch to the frame with a name"
+        result_flag = False
+
 
     def close_current_window(self):
         "Close the current window"

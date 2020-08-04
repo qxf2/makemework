@@ -162,3 +162,5 @@ class Cart_Page(Base_Page):
         result_flag = self.click_pay_button()
 
         return result_flag
+
+    def switch_to_form(self):
