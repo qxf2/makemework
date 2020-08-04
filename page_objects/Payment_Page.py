@@ -16,6 +16,17 @@ class Payment_Page(Base_Page):
         "Switching to payment iframe"
         self.switch_frame("iframe")
 
+    def click_pay_button(self):
+        "Click to the pay button"
+        result_flag = self.click_element(self.CART_PAY_BUTTON)
+        if result_flag:
+            self.switch_page("checkout")
+        self.conditional_write(result_flag,
+        positive="Clicked on the Pay with card button",
+        negative="Could not click on the Pay with card button")
+
+        return result_flag
+
     @Wrapit._exceptionHandler
     def set_email(self,email):
         "Set the email on the form"
@@ -86,6 +97,8 @@ class Payment_Page(Base_Page):
     def click_pay_button(self):
         "Click the pay button"
         result_flag = self.click_element(self.FORM_SUBMIT)
+        if result_flag:
+            self.switch_page("checkout")
         self.conditional_write(result_flag,
         positive="Clicked on the pay button",
         negative="Could not click on the pay button")

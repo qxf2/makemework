@@ -24,7 +24,7 @@ class PageFactory():
             test_obj = Sunscreens_Page(base_url=base_url,trailing_slash_flag=trailing_slash_flag)
         elif page_name in ["carts","cart","shopping cart"]:
             test_obj = Cart_Page(base_url=base_url,trailing_slash_flag=trailing_slash_flag)
-        elif page_name in ["contact","contacts"]:
+        elif page_name in ["payment","payments"]:
             test_obj = Payment_Page()
         return test_obj
 

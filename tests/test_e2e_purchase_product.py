@@ -79,14 +79,47 @@ def test_e2e_weather_shopper(base_url,browser,browser_version,os_version,os_name
         negative="Automation is not on the payment form",
         level="critical")
 
-        print("11111")
-        result_flag = test_obj.set_email("rohit@gmail.com")
-        print("22222")
+        result_flag = test_obj.set_email("rohit133@gmail.com")
         test_obj.log_result(result_flag,
         positive="Email successfully filled",
         negative="Email successfully not filled",
         level="critical")
-        print("33333")
+
+        result_flag = test_obj.set_account_number("6011000990139424")
+        test_obj.log_result(result_flag,
+        positive="Account number successfully filled",
+        negative="Account number successfully not filled",
+        level="critical")
+
+        result_flag = test_obj.set_expiry_date("0322")
+        test_obj.log_result(result_flag,
+        positive="Expiry date successfully filled",
+        negative="Expiry date successfully not filled",
+        level="critical")
+
+        result_flag = test_obj.set_cvv("123")
+        test_obj.log_result(result_flag,
+        positive="Cvv successfully filled",
+        negative="Cvv successfully not filled",
+        level="critical")
+
+        result_flag = test_obj.set_zip_code("123456")
+        test_obj.log_result(result_flag,
+        positive="Zip code successfully filled",
+        negative="Zip code successfully not filled",
+        level="critical")
+
+        result_flag = test_obj.click_pay_button()
+        test_obj.log_result(result_flag,
+        positive="Pay button successfully clicked",
+        negative="Pay button successfully not clicked",
+        level="critical")
+
+
+
+
+
+
 
         #Print out the results
         test_obj.write_test_summary()

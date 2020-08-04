@@ -16,6 +16,7 @@ class Cart_Page(Base_Page):
     COL_NAME = 0
     COL_PRICE = 1
     CART_PAY_BUTTON = locators.CART_PAY_BUTTON
+    FORM_EMAIL_ID = locators.FORM_EMAIL_ID
 
 
     def start(self):
@@ -151,6 +152,8 @@ class Cart_Page(Base_Page):
     def click_pay_button(self):
         "Click to the pay button"
         result_flag = self.click_element(self.CART_PAY_BUTTON)
+        if result_flag:
+            self.switch_page("payment")
         self.conditional_write(result_flag,
         positive="Clicked on the Pay with card button",
         negative="Could not click on the Pay with card button")
@@ -162,5 +165,3 @@ class Cart_Page(Base_Page):
         result_flag = self.click_pay_button()
 
         return result_flag
-
-    def switch_to_form(self):
