@@ -296,7 +296,10 @@ class Base_Page(Borg,unittest.TestCase):
 
     def switch_frame(self,name=None):
         "Make the driver switch to the frame with a name"
-        result_flag = False
+        result_flag = True
+        frame_id = self.driver.find_elements_by_tag_name(name)[0]
+        self.driver.switch_to.frame(frame_id)
+        return result_flag
 
 
     def close_current_window(self):

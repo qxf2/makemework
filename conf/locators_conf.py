@@ -31,6 +31,7 @@ CART_TOTAL = "id,total"
 CART_PAY_BUTTON = "xpath,//button[@type='submit']"
 
 #Payment form
+FRAME = "class,stripe_checkout_app"
 FORM_EMAIL_ID = "xpath,//input[@type='email']"
 FORM_ACCOUNT_NUMBER = "xpath,//input[@type='tel' and @placeholder='Card number']"
 FORM_EXPIRY_DATE = "xpath,//input[@type='tel' and @placeholder='MM / YY']"
