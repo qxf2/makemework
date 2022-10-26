@@ -9,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains 
+from selenium.webdriver.common.action_chains import ActionChains
 import unittest,time,logging,os,inspect,utils.Test_Rail
 from utils.Base_Logging import Base_Logging
 from inspect import getargspec
@@ -18,7 +18,6 @@ from .DriverFactory import DriverFactory
 from page_objects import PageFactory
 from utils.Custom_Exceptions import Stop_Test_Exception
 from utils.Test_Rail import Test_Rail
-from utils import Tesults
 from conf import remote_credentials as Conf
 
 
@@ -52,18 +51,17 @@ class Base_Page(Borg,unittest.TestCase):
             self.current_console_log_errors = []
             self.window_structure = {}
             self.testrail_flag = False
-            self.tesults_flag = False
             self.images = []
             self.browserstack_flag = False
 
             self.reset()
 
         #We assume relative URLs start without a / in the beginning
-        if base_url[-1] != '/' and trailing_slash_flag is True: 
-            base_url += '/' 
+        if base_url[-1] != '/' and trailing_slash_flag is True:
+            base_url += '/'
         self.base_url = base_url
         self.driver_obj = DriverFactory()
-        if self.driver is not None: 
+        if self.driver is not None:
             self.start() #Visit and initialize xpaths for the appropriate page
 
 
@@ -87,29 +85,29 @@ class Base_Page(Borg,unittest.TestCase):
     def switch_page(self,page_name):
         "Switch the underlying class to the required Page"
         self.__class__ = PageFactory.PageFactory.get_page_object(page_name,base_url=self.base_url).__class__
-       
+
 
     def register_driver(self,remote_flag,os_name,os_version,browser,browser_version,remote_project_name,remote_build_name):
-        "Register the driver with Page"      
+        "Register the driver with Page"
         self.set_screenshot_dir(os_name,os_version,browser,browser_version) # Create screenshot directory
         self.set_log_file()
         self.driver = self.driver_obj.get_web_driver(remote_flag,os_name,os_version,browser,browser_version,remote_project_name,remote_build_name)
-        self.driver.implicitly_wait(5) 
+        self.driver.implicitly_wait(5)
         self.driver.maximize_window()
-        
+
         if Conf.REMOTE_BROWSER_PLATFORM == 'BS' and remote_flag.lower() == 'y':
             self.register_browserstack()
             self.session_url = self.browserstack_obj.get_session_url()
             self.browserstack_msg = 'BrowserStack session URL:'
             self.write( self.browserstack_msg + '\n' + str(self.session_url))
-    
+
         self.start()
 
 
     def get_current_driver(self):
-        "Return current driver"        
+        "Return current driver"
         return self.driver
-        
+
 
     def register_testrail(self):
         "Register TestRail with Page"
@@ -117,16 +115,11 @@ class Base_Page(Borg,unittest.TestCase):
         self.tr_obj = Test_Rail()
 
 
-    def register_tesults(self):
-        "Register Tesults with Page"
-        self.tesults_flag = True
-
-
     def register_browserstack(self):
         "Register Browser Stack with Page"
         self.browserstack_flag = True
         self.browserstack_obj = BrowserStack_Library()
-        
+
 
     def get_calling_module(self):
         "Get the name of the calling module"
@@ -134,13 +127,13 @@ class Base_Page(Borg,unittest.TestCase):
         if 'runpy' or 'string' in calling_file:
             calling_file = inspect.stack()[4][3]
         calling_filename = calling_file.split(os.sep)
-        #This logic bought to you by windows + cygwin + git bash 
-        if len(calling_filename) == 1: #Needed for 
+        #This logic bought to you by windows + cygwin + git bash
+        if len(calling_filename) == 1: #Needed for
             calling_filename = calling_file.split('/')
         self.calling_module = calling_filename[-1].split('.')[0]
 
         return self.calling_module
-    
+
 
     def set_directory_structure(self):
         "Setup the required directory structure if it is not already present"
@@ -174,9 +167,9 @@ class Base_Page(Borg,unittest.TestCase):
         if os_name == 'OS X':
             os_name = 'OS_X'
         if isinstance(os_name,list):
-            windows_browser_combination = browser.lower() 
+            windows_browser_combination = browser.lower()
         else:
-            windows_browser_combination = os_name.lower() + '_' + str(os_version).lower() + '_' + browser.lower()+ '_' + str(browser_version)   
+            windows_browser_combination = os_name.lower() + '_' + str(os_version).lower() + '_' + browser.lower()+ '_' + str(browser_version)
         self.testname = self.get_calling_module()
         self.testname =self.testname.replace('<','')
         self.testname =self.testname.replace('>','')
@@ -191,14 +184,14 @@ class Base_Page(Borg,unittest.TestCase):
                     break
 
         return self.screenshot_dir
-    
+
 
     def set_log_file(self):
         'set the log file'
         self.log_name = self.testname + '.log'
         self.log_obj = Base_Logging(log_file_name=self.log_name,level=logging.DEBUG)
-	
-            
+
+
     def append_latest_image(self,screenshot_name):
         "Get image url list from Browser Stack"
         screenshot_url = self.browserstack_obj.get_latest_screenshot_url()
@@ -206,12 +199,12 @@ class Base_Page(Borg,unittest.TestCase):
         image_dict['name'] = screenshot_name
         image_dict['url'] = screenshot_url
         self.image_url_list.append(image_dict)
-        
+
 
     def save_screenshot(self,screenshot_name,pre_format="      #Debug screenshot: "):
         "Take a screenshot"
         if os.path.exists(self.screenshot_dir + os.sep + screenshot_name+'.png'):
-            for i in range(1,100): 
+            for i in range(1,100):
                 if os.path.exists(self.screenshot_dir + os.sep +screenshot_name+'_'+str(i)+'.png'):
                     continue
                 else:
@@ -221,8 +214,6 @@ class Base_Page(Borg,unittest.TestCase):
 	#self.conditional_write(flag=True,positive= screenshot_name + '.png',negative='', pre_format=pre_format)
         if self.browserstack_flag is True:
             self.append_latest_image(screenshot_name)
-        if self.tesults_flag is True:
-            self.images.append(screenshot_name)
 
 
     def open(self,url,wait_time=2):
@@ -241,7 +232,7 @@ class Base_Page(Borg,unittest.TestCase):
     def get_page_paths(self,section):
         "Open configurations file,go to right sections,return section obj"
         pass
-        
+
 
     def get_current_window_handle(self):
         "Return the latest window handle"
@@ -339,15 +330,15 @@ class Base_Page(Borg,unittest.TestCase):
     def get_element(self,locator,verbose_flag=True):
         "Return the DOM element of the path or 'None' if the element is not found "
         dom_element = None
-        try:            
-            locator = self.split_locator(locator)            
-            dom_element = self.driver.find_element(*locator)            
-        except Exception as e:            
+        try:
+            locator = self.split_locator(locator)
+            dom_element = self.driver.find_element(*locator)
+        except Exception as e:
             if verbose_flag is True:
                 self.write(str(e),'debug')
                 self.write("Check your locator-'%s,%s' in the conf/locators.conf file" %(locator[0],locator[1]))
             self.exceptions.append("Check your locator-'%s,%s' in the conf/locators.conf file" %(locator[0],locator[1]))
-               
+
         return dom_element
 
 
@@ -359,7 +350,7 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write("Error while parsing locator")
             self.exceptions.append("Unable to split the locator-'%s' in the conf/locators.conf file"%(locator[0],locator[1]))
-              
+
         return result
 
 
@@ -381,7 +372,7 @@ class Base_Page(Borg,unittest.TestCase):
     def click_element(self,locator,wait_time=3):
         "Click the button supplied"
         result_flag = False
-        try:            
+        try:
             link = self.get_element(locator)
             if link is not None:
                 link.click()
@@ -390,16 +381,16 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write(str(e),'debug')
             self.write('Exception when clicking link with path: %s'%locator)
-            self.exceptions.append("Error when clicking the element with path,'%s' in the conf/locators.conf file"%locator)   
+            self.exceptions.append("Error when clicking the element with path,'%s' in the conf/locators.conf file"%locator)
 
         return result_flag
-    
+
 
     def set_text(self,locator,value,clear_flag=True):
         "Set the value of the text field"
         text_field = None
         try:
-            text_field = self.get_element(locator)            
+            text_field = self.get_element(locator)
             if text_field is not None and clear_flag is True:
                 try:
                     text_field.clear()
@@ -418,10 +409,10 @@ class Base_Page(Borg,unittest.TestCase):
                 self.write('Could not write to text field: %s'%locator,'debug')
                 self.write(str(e),'debug')
                 self.exceptions.append("Could not write to text field- '%s' in the conf/locators.conf file"%locator)
-    
+
         return result_flag
-          
-          
+
+
     def get_text(self,locator):
         "Return the text for a given path or the 'None' object if the element is not found"
         text = ''
@@ -433,7 +424,7 @@ class Base_Page(Borg,unittest.TestCase):
             return None
         else:
             return text.encode('utf-8')
-        
+
 
     def get_dom_text(self,dom_element):
         "Return the text of a given DOM element or the 'None' object if the element has no attribute called text"
@@ -444,7 +435,7 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write(e)
             self.exceptions.append("Error when getting text from the DOM element-'%s' in the conf/locators.conf file"%locator)
-        
+
         return text
 
 
@@ -460,7 +451,7 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write(e)
             self.exceptions.append("Error when selecting checkbox-'%s' in the conf/locators.conf file"%locator)
-                    
+
         return result_flag
 
 
@@ -476,7 +467,7 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write(e)
             self.exceptions.append("Error when deselecting checkbox-'%s' in the conf/locators.conf file"%locator)
-        
+
         return result_flag
 
     unselect_checkbox = deselect_checkbox #alias the method
@@ -504,7 +495,7 @@ class Base_Page(Borg,unittest.TestCase):
         except Exception as e:
             self.write(e)
             self.exceptions.append("Error when selecting option from the drop-down '%s' "%locator)
-        
+
         return result_flag
 
 
@@ -513,7 +504,7 @@ class Base_Page(Borg,unittest.TestCase):
         result_flag = False
         if self.get_element(locator,verbose_flag=False) is not None:
             result_flag = True
-        
+
         return result_flag
 
 
@@ -558,14 +549,14 @@ class Base_Page(Borg,unittest.TestCase):
 
     def hover(self,locator,wait_seconds=2):
         "Hover over the element"
-        #Note: perform() of ActionChains does not return a bool 
+        #Note: perform() of ActionChains does not return a bool
         #So we have no way of returning a bool when hover is called
         element = self.get_element(locator)
         action_obj = ActionChains(self.driver)
         action_obj.move_to_element(element)
         action_obj.perform()
         self.wait(wait_seconds)
-        
+
 
     def teardown(self):
         "Tears down the driver"
@@ -595,25 +586,7 @@ class Base_Page(Borg,unittest.TestCase):
             self.tr_obj.update_testrail(case_id,test_run_id,result_flag,msg=msg)
         self.image_url_list = []
         self.msg_list = []
-        
-    def add_tesults_case(self, name, desc, suite, result_flag, msg='', files=[], params={}, custom={}):
-        "Update Tesults with test results"
-        if self.tesults_flag is True:
-            result = "unknown"
-            failReason = ""
-            if result_flag == True:
-                result = "pass"
-            if result_flag == False:
-                result = "fail"
-                failReason = msg
-            for image in self.images:
-                files.append(self.screenshot_dir + os.sep + image + '.png')
-            self.images = []
-            caseObj = {'name': name, 'suite': suite, 'desc': desc, 'result': result, 'reason': failReason, 'files': files, 'params': params}
-            for key, value in custom.items():
-                caseObj[key] = str(value)
-            Tesults.add_test_case(caseObj)
-        
+
 
     def wait(self,wait_seconds=5,locator=None):
         "Performs wait for time provided"
@@ -634,7 +607,7 @@ class Base_Page(Borg,unittest.TestCase):
 	        self.conditional_write(result_flag,
                     positive='Located the element: %s'%locator,
                     negative='Could not locate the element %s even after %.1f seconds'%(locator,wait_seconds))
-            
+
         return result_flag
 
 
@@ -653,15 +626,15 @@ class Base_Page(Borg,unittest.TestCase):
         self.result_counter += 1
         self.failure_message_list.append(pre_format + msg)
         if level.lower()=='critical':
-            raise Stop_Test_Exception("Stopping test because: " + msg)      
-        
+            raise Stop_Test_Exception("Stopping test because: " + msg)
+
 
     def log_result(self,flag,positive,negative,level='info'):
         "Write out the result of the test"
         if flag is True:
             self.success(positive,level=level)
-        else:            
-            self.failure(negative,level=level)        
+        else:
+            self.failure(negative,level=level)
 
 
     def read_browser_console_log(self):
@@ -677,7 +650,7 @@ class Base_Page(Borg,unittest.TestCase):
 
 
     def conditional_write(self,flag,positive,negative,level='info'):
-        "Write out either the positive or the negative message based on flag"      
+        "Write out either the positive or the negative message based on flag"
         if flag is True:
             self.write(positive,level)
             self.mini_check_pass_counter += 1
