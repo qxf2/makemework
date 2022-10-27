@@ -1,8 +1,7 @@
-import os,pytest
+import pytest
 from conf import browser_os_name_conf
 from utils import post_test_reports_to_slack
 from utils.email_pytest_report import Email_Pytest_Report
-from utils import Tesults
 
 
 @pytest.fixture
@@ -21,7 +20,7 @@ def base_url(request):
 def api_url(request):
     "pytest fixture for base url"
     return request.config.getoption("-A")
-    
+
 
 @pytest.fixture
 def test_run_id(request):
@@ -44,13 +43,13 @@ def remote_flag(request):
 @pytest.fixture
 def browser_version(request):
     "pytest fixture for browser version"
-    return request.config.getoption("-V") 
+    return request.config.getoption("--ver")
 
 
 @pytest.fixture
 def os_name(request):
     "pytest fixture for os_name"
-    return request.config.getoption("-P") 
+    return request.config.getoption("-P")
 
 
 @pytest.fixture
@@ -134,7 +133,7 @@ def app_name(request):
 @pytest.fixture
 def app_path(request):
     "pytest fixture for app path"
-    return request.config.getoption("-N")    
+    return request.config.getoption("-N")
 
 
 def pytest_terminal_summary(terminalreporter, exitstatus):
@@ -149,22 +148,22 @@ def pytest_terminal_summary(terminalreporter, exitstatus):
 
     if  terminalreporter.config.getoption("--tesults").lower() == 'y':
         Tesults.post_results_to_tesults()
-        
+
 def pytest_generate_tests(metafunc):
     "test generator function to run tests across different parameters"
 
     if 'browser' in metafunc.fixturenames:
-        if metafunc.config.getoption("-M").lower() == 'y':               
+        if metafunc.config.getoption("-M").lower() == 'y':
             if metafunc.config.getoption("-B") == ["all"]:
-                metafunc.parametrize("browser,browser_version,os_name,os_version", 
+                metafunc.parametrize("browser,browser_version,os_name,os_version",
                                     browser_os_name_conf.cross_browser_cross_platform_config)
             elif metafunc.config.getoption("-B") == []:
-                metafunc.parametrize("browser,browser_version,os_name,os_version", 
-                                    browser_os_name_conf.default_config_list) 
+                metafunc.parametrize("browser,browser_version,os_name,os_version",
+                                    browser_os_name_conf.default_config_list)
             else:
-                config_list = [(metafunc.config.getoption("-B")[0],metafunc.config.getoption("-V")[0],metafunc.config.getoption("-P")[0],metafunc.config.getoption("-O")[0])]
-                metafunc.parametrize("browser,browser_version,os_name,os_version", 
-                                    config_list) 
+                config_list = [(metafunc.config.getoption("-B")[0],metafunc.config.getoption("--ver")[0],metafunc.config.getoption("-P")[0],metafunc.config.getoption("-O")[0])]
+                metafunc.parametrize("browser,browser_version,os_name,os_version",
+                                    config_list)
         if metafunc.config.getoption("-M").lower() !='y':
             if metafunc.config.getoption("-B") == ["all"]:
                 metafunc.config.option.browser = browser_os_name_conf.local_browsers
@@ -173,14 +172,14 @@ def pytest_generate_tests(metafunc):
                 metafunc.parametrize("browser",browser_os_name_conf.default_browser)
             else:
                 config_list_local = [(metafunc.config.getoption("-B")[0])]
-                metafunc.parametrize("browser", config_list_local)          
+                metafunc.parametrize("browser", config_list_local)
 
 def pytest_addoption(parser):
     parser.addoption("-B","--browser",
                       dest="browser",
                       action="append",
                       default=[],
-                      help="Browser. Valid options are firefox, ie and chrome")                      
+                      help="Browser. Valid options are firefox, ie and chrome")
     parser.addoption("-U","--app_url",
                       dest="url",
                       default="https://weathershopper.pythonanywhere.com",
@@ -206,7 +205,7 @@ def pytest_addoption(parser):
                       action="append",
                       help="The operating system: xp, 7",
                       default=[])
-    parser.addoption("-V","--ver",
+    parser.addoption("--ver",
                       dest="browser_version",
                       action="append",
                       help="The version of the browser: a whole number",
