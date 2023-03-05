@@ -6,7 +6,7 @@ attrs==22.1.0
 better-exceptions-fork==0.2.1.post6
 boto3==1.25.1
 botocore==1.28.1
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
 colorama==0.4.1
 docutils==0.14
