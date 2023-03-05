@@ -20,7 +20,7 @@ packaging==19.0
 pillow>=6.2.0
 pluggy==1.0.0
 py==1.8.0
-Pygments==2.4.2
+Pygments==2.7.4
 pyparsing==2.4.0
 pytest==7.2.0
 pytest-forked==1.0.2
